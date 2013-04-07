@@ -9,7 +9,7 @@ class Brainfuck
   end
 
   def bf
-    File.open(ARGF.filename) do |f|
+    File.open(ARGF.path) do |f|
       f.each_char do |c|
         @p[@pc] ||= 0
         case c
