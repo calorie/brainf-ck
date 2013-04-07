@@ -1,6 +1,9 @@
 # coding: utf-8
 class Brainfuck
 
+  class ProgramError < StandardError
+  end
+
   def initialize
     @p = []
     @pc = 0
@@ -9,7 +12,7 @@ class Brainfuck
   end
 
   def bf
-    File.open(ARGF.path) do |f|
+    File.open ARGF.path do |f|
       f.each_char do |c|
         @p[@pc] ||= 0
         case c
@@ -22,15 +25,20 @@ class Brainfuck
         when '<'
           @pc -= 1
         when '['
-          @pc_stack.push(@pc)
-          @fp_stack.push(f.pos)
+          @pc_stack.push @pc
+          @fp_stack.push f.pos
         when ']'
           unless @p[@pc] == 0
             @pc = @pc_stack.pop
-            f.seek(@fp_stack.pop - 1,IO::SEEK_SET)
+            f.seek @fp_stack.pop - 1, IO::SEEK_SET
           end
         when '.'
           print @p[@pc].chr
+        when "\n"
+        when "\t"
+        when "\s"
+        else
+          raise ProgramError, "undefined character" unless f.eof?
         end
       end
     end
