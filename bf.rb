@@ -34,6 +34,10 @@ class Brainfuck
           end
         when '.'
           print @p[@pc].chr
+        when ','
+          `stty raw -echo`
+          @p[@pc] = STDIN.getc
+          `stty -raw echo`
         when "\n"
         when "\t"
         when "\s"
