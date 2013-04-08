@@ -4,6 +4,6 @@ brainf-ck
 終電逃したので作ったbrainf\*ckインタプリタ
 
 ```
-$ ruby br.rb ex.b
+$ ruby bf.rb ex.b
 ```
 

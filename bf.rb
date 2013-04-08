@@ -1,9 +1,6 @@
 # coding: utf-8
 class Brainfuck
 
-  class ProgramError < StandardError
-  end
-
   def initialize
     @p = []
     @pc = 0
@@ -36,7 +33,7 @@ class Brainfuck
           print @p[@pc].chr
         when ','
           `stty raw -echo`
-          @p[@pc] = STDIN.getc
+          @p[@pc] = STDIN.getc.bytes.to_a.first
           `stty -raw echo`
         when "\n"
         when "\t"
