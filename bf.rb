@@ -42,7 +42,7 @@ class Brainfuck
         when "\t"
         when "\s"
         else
-          raise ProgramError, "undefined character" unless f.eof?
+          f.lines.next
         end
       end
     end
