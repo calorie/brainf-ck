@@ -4,7 +4,6 @@ class Brainfuck
   def initialize
     @p = []
     @pc = 0
-    @pc_stack = []
     @fp_stack = []
   end
 
@@ -22,13 +21,10 @@ class Brainfuck
         when '<'
           @pc -= 1
         when '['
-          @pc_stack.push @pc
           @fp_stack.push f.pos
         when ']'
-          unless @p[@pc] == 0
-            @pc = @pc_stack.pop
-            f.seek @fp_stack.pop - 1, IO::SEEK_SET
-          end
+          fp = @fp_stack.pop
+          f.seek fp - 1, IO::SEEK_SET unless @p[@pc] == 0
         when '.'
           print @p[@pc].chr
         when ','
@@ -39,7 +35,7 @@ class Brainfuck
         when "\t"
         when "\s"
         else
-          f.lines.next
+          f.each_line.next
         end
       end
     end
